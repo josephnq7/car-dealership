@@ -1,20 +1,16 @@
 <template>
-    <table class="table" v-if="cars.length > 0">
+    <table class="table" v-if="manufacturers.length > 0">
         <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">Year</th>
-            <th scope="col">Manufacturer</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="car in cars" :key="car.id">
-            <th scope="row">{{car.id}}</th>
-            <td>{{car.name}}</td>
-            <td>{{car.year}}</td>
-            <td>{{car.manufacturer_name ?? '-'}}</td>
+        <tr v-for="manufacturer in manufacturers" :key="manufacturer.id">
+            <th scope="row">{{manufacturer.id}}</th>
+            <td>{{manufacturer.name}}</td>
             <td>
                 <i class="bi bi-eye p-2 icon-pointer"></i>
                 <i class="bi bi-pencil-square p-2 icon-pointer"></i>
@@ -30,14 +26,14 @@
     import {onMounted, ref} from "vue";
     import axios from "axios";
 
-    let cars = ref([]);
+    let manufacturers = ref([]);
 
-    const getCars = async () => {
-        let response = await axios.get('/api/car')
-        cars.value = response.data.data;
+    const getManufacturers = async () => {
+        let response = await axios.get('/api/manufacturer')
+        manufacturers.value = response.data.data;
     }
 
     onMounted(async () => {
-        await getCars()
+        await getManufacturers()
     });
 </script>

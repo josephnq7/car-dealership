@@ -7,6 +7,7 @@ use Database\Factories\CarFactory;
 use Database\Seeders\CarSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class CarTest extends TestCase
@@ -67,7 +68,10 @@ class CarTest extends TestCase
         $response->assertStatus(200);
         $data = $response->decodeResponseJson();
 
-        $this->assertEquals($data['meta']['total'], $this->cars->count());
+
+//        $this->assertEquals($data['meta']['total'], $this->cars->count()); //for pagination
+        $this->assertEquals(count($data['data']), $this->cars->count());
+
     }
 
     public function testUpdate(): void

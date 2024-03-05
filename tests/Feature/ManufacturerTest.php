@@ -68,7 +68,7 @@ class ManufacturerTest extends TestCase
         $response->assertStatus(200);
         $data = $response->decodeResponseJson();
 
-        $this->assertEquals($data['meta']['total'], $this->manufacturers->count());
+        $this->assertEquals(count($data['data']), $this->manufacturers->count());
     }
 
     public function testUpdate(): void

@@ -16,7 +16,7 @@ class CarFactory extends Factory
         $manufacturer = fake()->boolean ? (Manufacturer::inRandomOrder()->first() ?? ManufacturerFactory::new()->create()) : null;
 
         return [
-            'name' => fake()->text(),
+            'name' => fake()->name,
             'year' => fake()->numberBetween(1990, 2024),
             'manufacturer_id' => $manufacturer instanceof Manufacturer ? $manufacturer->id : null,
         ];

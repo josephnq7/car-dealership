@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ApiResource;
+use App\Services\CarService;
 use App\Services\ModelService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -26,23 +27,19 @@ abstract class ApiController extends BaseController
 
     protected ModelService $service;
 
-
-    protected function setBasicQuery()
+    public function __construct()
     {
         $this->query = $this->model::query();
     }
 
     public function index()
     {
-        $this->setBasicQuery();
-
-        $data = $this->query->paginate();
+        $data = $this->query->get();
         return $this->resourceModel::collection($data);
     }
 
     public function show(mixed $id, int $status = Response::HTTP_OK): mixed
     {
-        $this->setBasicQuery();
         $model = (new $this->model());
         $result = $this->query->where($model->getTable() . '.' . $model->getKeyName(), $id)
             ->first();
@@ -70,7 +67,6 @@ abstract class ApiController extends BaseController
 
     public function update(Request $request, mixed $id): mixed
     {
-        $this->setBasicQuery();
         $object = $this->query->findOrFail($id);
         $validated = $request->validate($this->rules());
         $object->fill($validated);
@@ -83,8 +79,6 @@ abstract class ApiController extends BaseController
     public function destroy(mixed $id)
     {
         try {
-            $this->setBasicQuery();
-
             $object = $this->query->findOrFail($id);
 
             if ($this->service->canDelete($object)) {

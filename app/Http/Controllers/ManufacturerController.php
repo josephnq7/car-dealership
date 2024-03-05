@@ -26,5 +26,7 @@ class ManufacturerController extends ApiController
     public function __construct(ManufacturerService $service)
     {
         $this->service = $service;
+        parent::__construct();
+
     }
 }
