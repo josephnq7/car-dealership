@@ -69,4 +69,29 @@ class CarTest extends TestCase
 
         $this->assertEquals($data['meta']['total'], $this->cars->count());
     }
+
+    public function testUpdate(): void
+    {
+        $data = $this->car->toArray();
+        $data['name'] = 'updated';
+        $response = $this->put($this->url . "/{$this->car->id}", $data);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                 'data' => [
+                     'id' => $this->car->id,
+                     'name' => 'updated',
+                     'year' => $this->car->year,
+                     'manufacturer_id' => $this->car->manufacturer_id,
+                 ],
+         ]);
+    }
+
+    public function testDestroy(): void
+    {
+        $response = $this->deleteJson(
+            $this->url . "/{$this->car->id}"
+        );
+        $response->assertStatus(204);
+    }
 }

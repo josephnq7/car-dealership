@@ -75,6 +75,23 @@ abstract class ApiController extends BaseController
         return $this->show($id);
     }
 
+    public function destroy(mixed $id)
+    {
+        try {
+            $this->setBasicQuery();
+
+            $object = $this->query->findOrFail($id);
+
+            $object->delete();
+
+            return response()->noContent();
+        } catch (ModelNotFoundException) {
+            throw new ModelNotFoundException();
+        } catch (Throwable $e) {
+            return response()->json(['message' => "Internal Error"], 500);
+        }
+    }
+
     protected abstract function rules();
 
 }
