@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseModel extends Model
 {
-
+    protected static function getModelName(): string
+    {
+        return class_basename(static::class);
+    }
 }

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('year');
-            $table->bigInteger('manufacture_id')->unsigned()->nullable();
+            $table->bigInteger('manufacturer_id')->unsigned()->nullable();
             $table->timestamps();
-            $table->foreign('manufacture_id')->references('id')->on('manufacturers')->onDelete('cascade');
+            $table->foreign('manufacturer_id')->references('id')->on('manufacturers')->onDelete('cascade');
         });
     }
 
