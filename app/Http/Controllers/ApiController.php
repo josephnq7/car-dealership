@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ApiResource;
+use App\Services\ModelService;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -20,6 +23,8 @@ abstract class ApiController extends BaseController
 
     protected Builder $query;
     protected string $resourceModel = ApiResource::class;
+
+    protected ModelService $service;
 
 
     protected function setBasicQuery()
@@ -82,7 +87,12 @@ abstract class ApiController extends BaseController
 
             $object = $this->query->findOrFail($id);
 
-            $object->delete();
+            if ($this->service->canDelete($object)) {
+                $object->delete();
+            } else {
+                //TODO: should explicitly tell what is the reason
+                return response()->json(['message' => "Cannot delete"], 422);
+            }
 
             return response()->noContent();
         } catch (ModelNotFoundException) {

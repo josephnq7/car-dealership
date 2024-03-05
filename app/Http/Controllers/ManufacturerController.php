@@ -3,26 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
-use App\Services\CarService;
+use App\Models\Manufacturer;
+use App\Services\ManufacturerService;
+use App\Services\ModelService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
-class CarController extends ApiController
+class ManufacturerController extends ApiController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    protected string $model = Car::class;
+    protected string $model = Manufacturer::class;
 
     protected function rules(string $method = 'create', $object = null): array
     {
         return [
             'name' => 'required|string|max:255',
-            'year' => 'required|integer',
-            'manufacturer_id' => 'nullable|integer|exists:manufacturers,id',
         ];
     }
 
-    public function __construct(CarService $service)
+    public function __construct(ManufacturerService $service)
     {
         $this->service = $service;
     }
