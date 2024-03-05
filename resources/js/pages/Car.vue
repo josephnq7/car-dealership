@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input type="search" class="form-control" placeholder="Search By Manufacturer..." aria-label="Search" v-model="keyword" @keyup="searchCars()">
+            <input type="search" class="form-control" placeholder="Search By Manufacturer..." aria-label="Search" v-model="keyword" @keyup="searchCars()" @click="searchCars()">
         </form>
     </div>
     <table class="table" v-if="cars.length > 0">
@@ -45,7 +45,7 @@
 
     let typingTimeout = null;
     //reducing the hit to BE
-    const searchCars = async () => {
+    const searchCars = async (timeout = 1000) => {
        new Promise((resolve) => {
             if (typingTimeout) clearTimeout(typingTimeout)
             typingTimeout = setTimeout(() => {
@@ -56,13 +56,13 @@
                     response = getCars();
                 }
                 resolve(response)
-            }, 1000)
+            }, timeout)
         }).then((data) => {
             cars.value = data;
         })
     }
 
     onMounted(async () => {
-        cars.value = await getCars()
+        await searchCars(0);
     });
 </script>

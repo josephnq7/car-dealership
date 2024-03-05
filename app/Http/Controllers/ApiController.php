@@ -85,7 +85,7 @@ abstract class ApiController extends BaseController
                 $object->delete();
             } else {
                 //TODO: should explicitly tell what is the reason
-                return response()->json(['message' => "Cannot delete"], 422);
+                return response()->json(['message' => "Unable to delete"], 422);
             }
 
             return response()->noContent();

@@ -14,7 +14,7 @@
             <td>
                 <i class="bi bi-eye p-2 icon-pointer"></i>
                 <i class="bi bi-pencil-square p-2 icon-pointer"></i>
-                <i class="bi bi-trash p-2 icon-pointer"></i>
+                <i class="bi bi-trash p-2 icon-pointer" @click="handleDelete(manufacturer.id)"></i>
             </td>
         </tr>
         </tbody>
@@ -25,12 +25,30 @@
 <script setup>
     import {onMounted, ref} from "vue";
     import axios from "axios";
+    import {toast} from 'vue3-toastify'
 
     let manufacturers = ref([]);
 
     const getManufacturers = async () => {
         let response = await axios.get('/api/manufacturer')
         manufacturers.value = response.data.data;
+    }
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete('/api/manufacturer/' + id)
+            toast("Delete successfully", {
+                autoClose: 1000,
+                type: 'success'
+            });
+            await getManufacturers();
+        } catch (exception) {
+            const message = exception.response.data.message;
+            toast(message, {
+                autoClose: 1000,
+                type: 'error'
+            });
+        }
     }
 
     onMounted(async () => {
