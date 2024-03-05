@@ -12,6 +12,10 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "^5.3.3",
+        "bootstrap-icons": "^1.11.3",
+        "sass": "^1.71.1",
         "vue": "^3.3.2",
         "vue-loader": "^17.3.1",
         "vue-router": "^4.0.13"
