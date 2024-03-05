@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Services\CarService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 
 class CarController extends ApiController
 {
@@ -34,6 +35,19 @@ class CarController extends ApiController
     public function index()
     {
         $this->query->with('manufacturer');
+        return parent::index();
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->get('keyword');
+
+        //TODO: refactor this to handle different search criteria
+        $this->query->join('manufacturers AS m', 'cars.manufacturer_id', '=', 'm.id')
+            ->select('cars.*')
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->where('m.name', 'LIKE', "%$keyword%");
+            });
         return parent::index();
     }
 }

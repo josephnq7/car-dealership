@@ -1,4 +1,9 @@
 <template>
+    <div class="container">
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control" placeholder="Search By Manufacturer..." aria-label="Search" v-model="keyword" @keyup="searchCars()">
+        </form>
+    </div>
     <table class="table" v-if="cars.length > 0">
         <thead>
         <tr>
@@ -31,13 +36,33 @@
     import axios from "axios";
 
     let cars = ref([]);
+    let keyword = ref('');
 
     const getCars = async () => {
         let response = await axios.get('/api/car')
-        cars.value = response.data.data;
+        return response.data.data;
+    }
+
+    let typingTimeout = null;
+    //reducing the hit to BE
+    const searchCars = async () => {
+       new Promise((resolve) => {
+            if (typingTimeout) clearTimeout(typingTimeout)
+            typingTimeout = setTimeout(() => {
+                let response;
+                if (keyword.value) {
+                     response = axios.get('/api/search-car?keyword=' + keyword.value).then((res) => res.data.data);
+                } else {
+                    response = getCars();
+                }
+                resolve(response)
+            }, 1000)
+        }).then((data) => {
+            cars.value = data;
+        })
     }
 
     onMounted(async () => {
-        await getCars()
+        cars.value = await getCars()
     });
 </script>

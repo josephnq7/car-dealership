@@ -8,14 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CarService extends ModelService
 {
-    public function searchByManufacturer(string $input = ''): Collection|array
-    {
-        return Car::query()->join('manufacturers AS m', 'cars.manufacturer_id', '=', 'm.id')
-            ->select('cars.*')
-            ->when($input, function ($query) use ($input) {
-                $query->where('m.name', 'LIKE', "%$input%");
-            })->get();
-    }
 
     public function canDelete(Model $object): bool
     {

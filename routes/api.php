@@ -20,7 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+//TODO: need to secure those by implement authentication (sanctum???)
 Route::apiResource('car', CarController::class);
 Route::apiResource('manufacturer', ManufacturerController::class);
+Route::get('search-car', [CarController::class, 'search']);
+
+
 
