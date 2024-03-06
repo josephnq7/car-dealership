@@ -34,7 +34,9 @@ class CarController extends ApiController
 
     public function index()
     {
-        $this->query->with('manufacturer');
+        $this->query->with('manufacturer', function ($query) {
+            return $query->cacheTags([$this->getModelTagName() . ':relation',]);
+        });
         return parent::index();
     }
 

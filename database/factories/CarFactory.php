@@ -13,7 +13,7 @@ class CarFactory extends Factory
 
     public function definition(): array
     {
-        $manufacturer = fake()->boolean ? (Manufacturer::inRandomOrder()->first() ?? ManufacturerFactory::new()->create()) : null;
+        $manufacturer = fake()->boolean ? (Manufacturer::inRandomOrder()->dontCache()->first() ?? ManufacturerFactory::new()->create()) : null;
 
         return [
             'name' => fake()->name,

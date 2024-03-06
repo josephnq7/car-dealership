@@ -18,6 +18,10 @@ class Manufacturer extends BaseModel
 
     protected $fillable = ['name'];
 
+    public $cacheTags = [];
+
+    public $cachePrefix = 'Car_';
+
     public function cars(): HasMany
     {
         return $this->hasMany(Car::class);

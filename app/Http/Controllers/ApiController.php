@@ -96,6 +96,11 @@ abstract class ApiController extends BaseController
         }
     }
 
+    protected function getModelTagName(): string
+    {
+        return class_basename($this->model);
+    }
+
     protected abstract function rules();
 
 }
