@@ -20,6 +20,7 @@ CREATE SCHEMA `car_dealership` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_c
 ```
 - Run `composer install`
 - Run `npm install`
+- Run `php artisan key:generate`
 - Run `php artisan serve`
 - Run `npm run dev`
 - Run `php artisan initialize-local` : this will fresh your migrations, clear cache, run seeders

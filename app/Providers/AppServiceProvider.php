@@ -21,9 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //testing caching
-        DB::listen(static function ($query) {
-            Log::debug('Query: ' . $query->sql);
-        });
+        //uncomment if you want to test caching
+//        DB::listen(static function ($query) {
+//            Log::debug('Query: ' . $query->sql);
+//        });
     }
 }
