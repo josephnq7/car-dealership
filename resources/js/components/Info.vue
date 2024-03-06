@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {capitalizeFirstLetter} from "../utils";
 export default {
     props: {
         record: {
@@ -18,11 +19,6 @@ export default {
         },
     },
     setup() {
-
-        const capitalizeFirstLetter = (str) => {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        }
-
         return {
             capitalizeFirstLetter,
         };

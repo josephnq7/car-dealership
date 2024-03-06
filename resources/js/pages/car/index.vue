@@ -21,8 +21,8 @@
             <td>{{car.year}}</td>
             <td>{{car.manufacturer ?? '-'}}</td>
             <td>
-                <i class="bi bi-eye p-2 icon-pointer"  @click="redirectToRecord(car.id)"></i>
-                <i class="bi bi-trash p-2 icon-pointer"></i>
+                <i class="bi bi-eye p-2 icon-pointer" @click="redirectToRecord(car.id)"></i>
+                <i class="bi bi-trash p-2 icon-pointer" @click="handleDelete(car.id)"></i>
             </td>
         </tr>
         </tbody>
@@ -34,6 +34,7 @@
     import {onMounted, ref} from "vue";
     import axios from "axios";
     import {useRouter} from "vue-router";
+    import {toast} from "vue3-toastify";
 
     let cars = ref([]);
     let keyword = ref('');
@@ -67,6 +68,23 @@
     const redirectToRecord = (id) => {
         router.push({ path: `/car/${id}` });
     };
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete('/api/car/' + id)
+            toast("Delete Car successfully", {
+                autoClose: 1000,
+                type: 'success'
+            });
+            await searchCars(0);
+        } catch (exception) {
+            const message = exception.response.data.message;
+            toast(message, {
+                autoClose: 1000,
+                type: 'error'
+            });
+        }
+    }
 
     onMounted(async () => {
         await searchCars(0);
