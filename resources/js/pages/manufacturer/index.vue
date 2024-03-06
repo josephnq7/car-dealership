@@ -12,8 +12,7 @@
             <th scope="row">{{manufacturer.id}}</th>
             <td>{{manufacturer.name}}</td>
             <td>
-                <i class="bi bi-eye p-2 icon-pointer"></i>
-                <i class="bi bi-pencil-square p-2 icon-pointer"></i>
+                <i class="bi bi-eye p-2 icon-pointer" @click="redirectToRecord(manufacturer.id)"></i>
                 <i class="bi bi-trash p-2 icon-pointer" @click="handleDelete(manufacturer.id)"></i>
             </td>
         </tr>
@@ -26,6 +25,7 @@
     import {onMounted, ref} from "vue";
     import axios from "axios";
     import {toast} from 'vue3-toastify'
+    import {useRouter} from "vue-router";
 
     let manufacturers = ref([]);
 
@@ -50,6 +50,12 @@
             });
         }
     }
+
+    const router = useRouter();
+
+    const redirectToRecord = (id) => {
+        router.push({ path: `/manufacturer/${id}` });
+    };
 
     onMounted(async () => {
         await getManufacturers()

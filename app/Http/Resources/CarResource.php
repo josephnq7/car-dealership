@@ -22,7 +22,7 @@ class CarResource extends ApiResource
               'year',
               'manufacturer_id'
         ]);
-        $data['manufacturer_name'] = $this->resource->manufacturer?->name;
+        $data['manufacturer'] = $this->resource->manufacturer?->name;
         return $data;
     }
 }

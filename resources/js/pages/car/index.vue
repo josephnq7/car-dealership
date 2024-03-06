@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input type="search" class="form-control" placeholder="Search By Manufacturer..." aria-label="Search" v-model="keyword" @keyup="searchCars()" @click="searchCars()">
+            <input type="search" class="form-control" placeholder="Search By Manufacturer..." aria-label="Search" v-model="keyword" @keyup="searchCars()" @click="searchCars(0)">
         </form>
     </div>
     <table class="table" v-if="cars.length > 0">
@@ -19,10 +19,9 @@
             <th scope="row">{{car.id}}</th>
             <td>{{car.name}}</td>
             <td>{{car.year}}</td>
-            <td>{{car.manufacturer_name ?? '-'}}</td>
+            <td>{{car.manufacturer ?? '-'}}</td>
             <td>
-                <i class="bi bi-eye p-2 icon-pointer"></i>
-                <i class="bi bi-pencil-square p-2 icon-pointer"></i>
+                <i class="bi bi-eye p-2 icon-pointer"  @click="redirectToRecord(car.id)"></i>
                 <i class="bi bi-trash p-2 icon-pointer"></i>
             </td>
         </tr>
@@ -34,6 +33,7 @@
 <script setup>
     import {onMounted, ref} from "vue";
     import axios from "axios";
+    import {useRouter} from "vue-router";
 
     let cars = ref([]);
     let keyword = ref('');
@@ -61,6 +61,12 @@
             cars.value = data;
         })
     }
+
+    const router = useRouter();
+
+    const redirectToRecord = (id) => {
+        router.push({ path: `/car/${id}` });
+    };
 
     onMounted(async () => {
         await searchCars(0);

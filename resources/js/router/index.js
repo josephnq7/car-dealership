@@ -1,7 +1,8 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Layout from "../Layout.vue";
-import Car from "../pages/Car.vue";
-import Manufacturer from '../pages/Manufacturer.vue'
+import Car from "../pages/car/index.vue";
+import Manufacturer from '../pages/manufacturer/index.vue'
+import Detail from "../components/Detail.vue";
 
 const routes = [
     {
@@ -15,6 +16,10 @@ const routes = [
             {
                 path: 'car',
                 component: Car
+            },
+            {
+                path: '/:model/:id',
+                component: Detail, props: true
             },
             {
                 path: 'manufacturer',

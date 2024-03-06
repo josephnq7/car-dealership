@@ -15,6 +15,8 @@ class ApiResource extends JsonResource
      */
     public function toArray($request): array
     {
-        return parent::toArray($request);
+        $data = parent::toArray($request);
+        unset($data['deleted_at'], $data['created_at'], $data['updated_at']);
+        return $data;
     }
 }
