@@ -30,5 +30,10 @@ class InitializeCron extends Command
         Artisan::call('db:seed', [
             '--class' => 'CarSeeder',
         ]);
+
+        $this->info("--- Seed customers ---");
+        Artisan::call('db:seed', [
+            '--class' => 'CustomerSeeder',
+        ]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ManufacturerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //TODO: need to secure those by implement authentication (sanctum???)
 Route::apiResource('car', CarController::class);
+Route::apiResource('customer', CustomerController::class);
 Route::apiResource('manufacturer', ManufacturerController::class);
 Route::get('search-car', [CarController::class, 'search']);
 

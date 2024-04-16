@@ -11,6 +11,7 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><router-link to="/manufacturer" exact active-class="link-dark" class="nav-link px2 link-secondary">Manufacturers</router-link></li>
                     <li><router-link to="/car" exact active-class="link-dark" class="nav-link px2 link-secondary">Cars</router-link></li>
+                    <li><router-link to="/customer" exact active-class="link-dark" class="nav-link px2 link-secondary">Customers</router-link></li>
                 </ul>
 
             </div>
