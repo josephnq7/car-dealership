@@ -16,6 +16,9 @@ class CustomerController extends ApiController
 
     protected string $model = Customer::class;
 
+    /**
+     * test git
+     */
     protected function rules(string $method = 'create', $object = null): array
     {
         return [
